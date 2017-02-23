@@ -23,10 +23,19 @@ class CacheServer:
         return self.videos[n]
 
 
+class CacheLatency:
+    def __init__(self, latency, cache):
+        self.latency = latency
+        self.cache = cache
+
+
 class Endpoint:
     def __init__(self, latency_center):
         self.latency_cache = []
-        self.latency_center = 0
+        self.latency_center = latency_center
+
+    def add_cache(self, cache_server: CacheServer, latency: int):
+        self.latency_cache.append(CacheLatency(latency, cache_server))
 
 
 class Request:
