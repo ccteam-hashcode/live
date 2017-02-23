@@ -17,6 +17,16 @@ class System:
         return System.cache_servers
 
     @staticmethod
+    def _clear():
+        System.max_cache_size = 0
+        System.cache_servers = []
+        System.endpoints = []
+        System.requests = []
+        System.videos = []
+        System.valid_endpoints = []
+        System.valid_videos = []
+
+    @staticmethod
     def filter_endpoints():
         for endpoint in System.endpoints:
             if len(endpoint.latency_cache) != 0:
@@ -41,7 +51,6 @@ class System:
                 else:
                     break
             cache_server.add_video(video)
-
 
 
 class Video:

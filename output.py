@@ -2,18 +2,16 @@ from objects import System
 
 
 class Output():
-    file_name = 'ouput.out'
 
-    def __init__(self):
-        self.file = open(self.file_name, 'w+')
+    def generate_output(self, ouput_file):
+        file = open(ouput_file, 'w+')
 
-    def generate_output(self):
         cache_servers = System.get_cache_servers()
-        self.file.write(str(len(cache_servers)) + '\n')
+        file.write(str(len(cache_servers)) + '\n')
         for server in cache_servers:
             videos = server.get_videos()
-            self.file.write(str(server.id))
+            file.write(str(server.id))
             for video in videos:
-                    self.file.write(' ' + str(video.id))
-            self.file.write('\n')
+                    file.write(' ' + str(video.id))
+            file.write('\n')
 
