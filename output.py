@@ -1,11 +1,17 @@
 class Output():
     file_name = 'ouput.out'
-    file = None
-    system = None
 
     def __init__(self, system):
         self.file = open(self.file_name, 'w+')
         self.system = system
 
     def generate_output(self):
-        self.file.write(len(self.system.get_cache_servers))
+        cache_servers = self.system.get_cache_servers
+        self.file.write(len(cache_servers) + '\n')
+        for server in cache_servers:
+            videos = server.get_videos()
+            self.file.write(server.id)
+            for video in videos:
+                    self.file.write(' ' + video.id)
+            self.file.write('\n')
+

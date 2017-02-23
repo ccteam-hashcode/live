@@ -1,19 +1,22 @@
 class System:
     def __init__(self):
+        self.max_cache_size = 0
         self.cache_servers = []
         self.endpoints = []
         self.requests = []
 
 
 class Video:
-    def __init__(self, size):
+    def __init__(self, size, id):
         self.size = size
+        self.id = id
 
 
 class CacheServer:
-    def __init__(self, capacity):
+    def __init__(self, left_capacity, id):
         self.videos = []
-        self.capacity = capacity
+        self.left_capacity = left_capacity
+        self.id = id
 
     def add_video(self, size):
         v = Video(size)
