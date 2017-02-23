@@ -3,6 +3,7 @@ class System:
     cache_servers = []
     endpoints = []
     requests = []
+    videos = []
 
     @staticmethod
     def get_cache_servers():
@@ -21,8 +22,8 @@ class CacheServer:
         self.left_capacity = left_capacity
         self.id = id
 
-    def add_video(self, size):
-        v = Video(size)
+    def add_video(self, size, id):
+        v = Video(size, id)
         self.videos.append(v)
 
     def get_video(self, n):
@@ -45,7 +46,7 @@ class Endpoint:
 
 
 class Request:
-    def __init__(self):
-        self.video = None
-        self.endpoint = 1
-        self.count = 0
+    def __init__(self, video_id, endpoint_id, count):
+        self.video_id = video_id
+        self.endpoint_id = endpoint_id
+        self.count = count
