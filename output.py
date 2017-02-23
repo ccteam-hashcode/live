@@ -9,11 +9,11 @@ class Output():
 
     def generate_output(self):
         cache_servers = System.get_cache_servers()
-        self.file.write(len(cache_servers) + '\n')
+        self.file.write(str(len(cache_servers)) + '\n')
         for server in cache_servers:
             videos = server.get_videos()
-            self.file.write(server.id)
+            self.file.write(str(server.id))
             for video in videos:
-                    self.file.write(' ' + video.id)
+                    self.file.write(' ' + str(video.id))
             self.file.write('\n')
 

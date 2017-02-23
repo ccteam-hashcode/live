@@ -35,10 +35,13 @@ class Parser(object):
 
 
 def main():
-    Parser.parse('me_at_the_zoo.in')
+    Parser.parse('kittens.in')
+
+    System.run()
 
     output = Output()
-    # output.generate_output()
+
+    output.generate_output()
     pass
 
 if __name__ == '__main__':
