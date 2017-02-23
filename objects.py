@@ -1,3 +1,6 @@
+import operator
+
+
 class System:
     max_cache_size = 0
     cache_servers = []
@@ -41,16 +44,26 @@ class System:
     def run():
         System.filter_endpoints()
         System.filter_big_videos()
-        index = 0
-        cache_server = System.cache_servers[index]
-        for video in System.valid_videos:
-            if video.size > cache_server.left_capacity:
-                index += 1
-                if index < len(System.cache_servers):
-                    cache_server = System.cache_servers[index]
-                else:
-                    break
-            cache_server.add_video(video)
+
+        results = {}
+        for cache in System.cache_servers:
+            for endpoint in cache.endpoints:
+                for video_id, count in System.endpoints[endpoint].videos.items():
+                    score = count * (System.endpoints[endpoint].latency_center - System.endpoints[endpoint].latency_cache[cache.id])
+                    key = (str(video_id) + "_" + str(cache.id))
+                    if key in results:
+                        results[key] = results[key] + score
+                    else:
+                        results[key] = score
+        sorted_x = sorted(results.items(), key=operator.itemgetter(1), reverse=True)
+
+        for item in sorted_x:
+            pair = item[0].split('_')
+            cache = System.cache_servers[int(pair[1])]
+            video = System.valid_videos[int(pair[0])]
+            if cache.left_capacity > video.size:
+                cache.add_video(video)
+        pass
 
 
 class Video:
@@ -64,6 +77,7 @@ class CacheServer:
         self.videos = []
         self.left_capacity = left_capacity
         self.id = id
+        self.endpoints = []
 
     def add_video(self, video):
         self.left_capacity -= video.size
@@ -83,12 +97,15 @@ class CacheLatency:
 
 
 class Endpoint:
-    def __init__(self, latency_center):
-        self.latency_cache = []
+
+    def __init__(self, latency_center, id):
         self.latency_center = latency_center
+        self.id = id
+        self.videos = {}
+        self.latency_cache = {}
 
     def add_cache(self, cache_server: CacheServer, latency: int):
-        self.latency_cache.append(CacheLatency(latency, cache_server))
+        self.latency_cache[cache_server.id] = latency
 
 
 class Request:
