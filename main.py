@@ -12,9 +12,12 @@ class Parser(object):
             System.max_cache_size = int(cache_size)
 
             i = 0
+            video_size_total = 0
             for video_size in infile.readline().split(' '):
+                video_size_total += int(video_size)
                 System.videos.append(Video(int(video_size), i))
                 i += 1
+            System.avg_size = video_size_total / i
 
             for a in range(int(c_cache)):
                 System.cache_servers.append(CacheServer(int(cache_size), a))
@@ -44,23 +47,23 @@ def main():
     output.generate_output('me_at_the_zoo.out')
     System._clear()
 
-    # Parser.parse('kittens.in')
-    # System.run()
-    # output = Output()
-    # output.generate_output('kittens.out')
-    # System._clear()
-    #
-    # Parser.parse('trending_today.in')
-    # System.run()
-    # output = Output()
-    # output.generate_output('trending_today.out')
-    # System._clear()
-    #
-    # Parser.parse('videos_worth_spreading.in')
-    # System.run()
-    # output = Output()
-    # output.generate_output('videos_worth_spreading.out')
-    # System._clear()
+    Parser.parse('kittens.in')
+    System.run()
+    output = Output()
+    output.generate_output('kittens.out')
+    System._clear()
+
+    Parser.parse('trending_today.in')
+    System.run()
+    output = Output()
+    output.generate_output('trending_today.out')
+    System._clear()
+
+    Parser.parse('videos_worth_spreading.in')
+    System.run()
+    output = Output()
+    output.generate_output('videos_worth_spreading.out')
+    System._clear()
 
 
 if __name__ == '__main__':

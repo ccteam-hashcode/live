@@ -14,6 +14,7 @@ class System:
 
     valid_endpoints = []
     valid_videos = []
+    avg_size = 0
 
     @staticmethod
     def get_cache_servers():
@@ -40,6 +41,7 @@ class System:
         for video in System.videos:
             if video.size <= System.max_cache_size:
                 System.valid_videos.append(video)
+
     @staticmethod
     def run():
         System.filter_endpoints()
@@ -61,7 +63,7 @@ class System:
             pair = item[0].split('_')
             cache = System.cache_servers[int(pair[1])]
             video = System.valid_videos[int(pair[0])]
-            if cache.left_capacity > video.size:
+            if cache.left_capacity >= video.size:
                 cache.add_video(video)
         pass
 
