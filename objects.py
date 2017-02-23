@@ -1,9 +1,8 @@
 class System:
-    def __init__(self):
-        self.max_cache_size = 0
-        self.cache_servers = []
-        self.endpoints = []
-        self.requests = []
+    max_cache_size = 0
+    cache_servers = []
+    endpoints = []
+    requests = []
 
 
 class Video:
