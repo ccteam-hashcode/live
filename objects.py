@@ -4,6 +4,10 @@ class System:
     endpoints = []
     requests = []
 
+    @staticmethod
+    def get_cache_servers():
+        return System.cache_servers
+
 
 class Video:
     def __init__(self, size, id):
