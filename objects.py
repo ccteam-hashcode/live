@@ -1,9 +1,13 @@
 class System:
     max_cache_size = 0
     cache_servers = []
+    """ :type: list[CacheServer]"""
     endpoints = []
+    """ :type: list[Endpoint]"""
     requests = []
+    """ :type: list[Request]"""
     videos = []
+    """ :type: list[Video]"""
 
     @staticmethod
     def get_cache_servers():
