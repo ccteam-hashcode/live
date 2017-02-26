@@ -69,6 +69,13 @@ class System:
                 cache.add_video(video)
                 used_videos[int(pair[0])] = 1
 
+        for item in sorted_x:
+            pair = item[0].split('_')
+            cache = System.cache_servers[int(pair[1])]
+            video = System.videos[int(pair[0])]
+            if cache.left_capacity >= video.size:
+                cache.add_video(video)
+
 
 class Video:
     def __init__(self, size, id):
@@ -85,7 +92,8 @@ class CacheServer:
 
     def add_video(self, video):
         self.left_capacity -= video.size
-        self.videos.append(video)
+        if video not in self.videos:
+            self.videos.append(video)
 
     def get_video(self, n):
         return self.videos[n]
