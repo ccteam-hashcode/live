@@ -46,7 +46,6 @@ class System:
     def run():
         System.filter_endpoints()
         System.filter_big_videos()
-
         results = {}
         for cache in System.cache_servers:
             for endpoint in cache.endpoints:
@@ -59,13 +58,16 @@ class System:
                         results[key] = score
         sorted_x = sorted(results.items(), key=operator.itemgetter(1), reverse=True)
 
+        used_videos = {}
         for item in sorted_x:
             pair = item[0].split('_')
             cache = System.cache_servers[int(pair[1])]
-            video = System.valid_videos[int(pair[0])]
+            video = System.videos[int(pair[0])]
+            if int(pair[0]) in used_videos:
+                continue
             if cache.left_capacity >= video.size:
                 cache.add_video(video)
-        pass
+                used_videos[int(pair[0])] = 1
 
 
 class Video:
